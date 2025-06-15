@@ -9,11 +9,11 @@
 
 EveryPersonSegSimple Node
 
-![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_person_area.gif)
-
-EveryPersonSegSimple Node person_fullfil:True
-
 ![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.gif)
+
+EveryPersonSegSimple Node  person_fullfil:True
+
+![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_person_area.gif)
 
 EveryPersonSegDetail Node
 
