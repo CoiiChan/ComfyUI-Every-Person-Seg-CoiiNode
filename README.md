@@ -39,6 +39,7 @@ EveryPersonSegDetail Node
 
 EveryPersonSegSimple Node
 ![工作流示例](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.png)
+
 EveryPersonSegSimple Node
 ![工作流示例](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsegdetail.png)
 
