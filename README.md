@@ -2,7 +2,7 @@
 [English](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/README_EN.md)|[中文](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/README.md)
 
 ## 项目介绍
-为多人使用场景提供人物精细轮廓逐一拆分能力的工具。
+为多人生图使用场景提供人物精细轮廓逐一拆分能力的工具。
 
 ## 开发原因
 多人化的生成在comfyui的应用中存在需求，但是有很多分割人物id的工具使用bbox，bbox存在多人不能拆除干净，因此制作该custom node插件。对于在多人循环inpaint，换脸等场景提供必要实现能力
