@@ -80,6 +80,9 @@ This node combines YOLOv8 segmentation model and MediaPipe portrait segmentation
 
 #### Output
 - **person_masks**: Refined portrait part mask collection
+  
+---
+[![CoiiChan](https://avatars.githubusercontent.com/u/49615294?v=4)](https://github.com/CoiiChan)
 
 ## Acknowledgments
 The mask contour optimization part of the EveryPersonSegDetail node in this project is modified and implemented based on the [djbielejeski/a-person-mask-generator](https://github.com/djbielejeski/a-person-mask-generator) project.
