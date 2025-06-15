@@ -32,6 +32,9 @@ EveryPersonSegDetail Node
 
 #### 输出
 - **mask**: 人像掩码集合
+  
+---
+[![CoiiChan](https://avatars.githubusercontent.com/u/49615294?v=4)](https://github.com/CoiiChan)
 
 ## 使用示例
 
