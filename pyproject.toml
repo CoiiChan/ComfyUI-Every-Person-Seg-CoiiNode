@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-every-person-seg-coii"
+description = "A masking tool that provides the ability to break down the detailed contours of characters one by one for multi person use scenarios"
+version = "1.0.1"
+license = { file = "LICENSE" }
+dependencies = ["mediapipe>=0.10.13", "ultralytics>=8.0.0", "numpy>=1.21.0", "opencv-python>=4.5.0", "Pillow>=9.0.0", "torch>=1.10.0", "scipy>=1.7.0"]
+
+[project.urls]
+Repository = "https://github.com/CoiiChan/comfyui-every-person-seg-coii"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "CoiiChan"
+DisplayName = "comfyui-every-person-seg-coii"
+Icon = ""
