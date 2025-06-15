@@ -8,12 +8,15 @@
 ## ComfyUI 节点说明
 
 EveryPersonSegSimple Node
+
 ![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_person_area.gif)
 
 EveryPersonSegSimple Node person_fullfil:True
+
 ![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.gif)
 
 EveryPersonSegDetail Node
+
 ![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsegdetail.gif)
 
 
