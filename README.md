@@ -40,10 +40,10 @@ EveryPersonSegDetail Node
 
 将工作流example/workflowexample_everypersonseg.json拖入 ComfyUI 即可使用：
 
-EveryPersonSegSimple Node
+EveryPersonSegSimple
 ![工作流示例](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.png)
 
-EveryPersonSegSimple Node
+EveryPersonSegDetail
 ![工作流示例](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsegdetail.png)
 
 ## 依赖项
