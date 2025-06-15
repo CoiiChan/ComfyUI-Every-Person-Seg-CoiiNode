@@ -1,4 +1,6 @@
 # comfyui-every-person-seg-coii
+[English](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/README_EN.md)|[中文](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/README.md)
+
 ## Project Introduction
 A tool that provides the ability to split fine-grained contours of people one by one for multi-person usage scenarios.
 
