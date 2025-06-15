@@ -33,8 +33,6 @@ EveryPersonSegDetail Node
 #### 输出
 - **mask**: 人像掩码集合
   
----
-[![CoiiChan](https://avatars.githubusercontent.com/u/49615294?v=4)](https://github.com/CoiiChan)
 
 ## 使用示例
 
@@ -83,6 +81,9 @@ EveryPersonSegSimple Node
 
 #### 输出
 - **person_masks**: 精细化人像部位遮罩集合
+
+---
+[![CoiiChan](https://avatars.githubusercontent.com/u/49615294?v=4)](https://github.com/CoiiChan)
 
 ## 致谢
 本项目中的 EveryPersonSegDetail 节点遮罩轮廓优化部分代码基于 [djbielejeski/a-person-mask-generator](https://github.com/djbielejeski/a-person-mask-generator) 项目修改实现。
