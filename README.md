@@ -1,11 +1,13 @@
 # comfyui-every-person-seg-coii
 ## 项目介绍
 为多人使用场景提供人物精细轮廓逐一拆分能力的工具。
-- EveryPersonSegSimple
+EveryPersonSegSimple
 ![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_person_area.gif)
-- EveryPersonSegSimple person_fullfil:True
+
+EveryPersonSegSimple person_fullfil:True
 ![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.gif)
-- EveryPersonSegDetail
+
+EveryPersonSegDetail
 ![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsegdetail.gif)
 
 ## 开发原因
