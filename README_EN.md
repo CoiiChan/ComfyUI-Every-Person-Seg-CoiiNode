@@ -39,10 +39,10 @@ EveryPersonSegDetail Node
 
 Drag the workflow example/workflowexample_everypersonseg.json into ComfyUI to use:
 
-EveryPersonSegSimple Node
+EveryPersonSegSimple
 ![Workflow Example](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.png)
 
-EveryPersonSegSimple Node
+EveryPersonSegDetail
 ![Workflow Example](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsegdetail.png)
 
 ## Dependencies
