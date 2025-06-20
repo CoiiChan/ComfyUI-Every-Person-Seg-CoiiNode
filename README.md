@@ -1,19 +1,19 @@
 # ComfyUI-Every-Person-Seg-CoiiNode
-[English](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README_EN.md)|[中文](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README.md)
+[English](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README.md)|[中文](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README_CN.md)
 
-## 项目介绍
-为多人生图使用场景提供人物精细轮廓逐一拆分能力的工具。
+## Project Introduction
+A tool that provides the ability to split fine-grained contours of people one by one for multi-person usage scenarios.
 
-## 开发原因
-多人化的生成在comfyui的应用中存在需求，但是有很多分割人物id的工具使用bbox，bbox存在多人不能拆除干净，因此制作该custom node插件。对于在多人循环inpaint，换脸等场景提供必要实现能力
+## Development Reason
+There is a demand for multi-person generation in ComfyUI applications, but many tools for segmenting person IDs use bbox, which has the problem of not being able to separate multiple people cleanly. Therefore, this custom node plugin was created. It provides necessary implementation capabilities for scenarios such as multi-person loop inpaint and face swapping.
 
-## ComfyUI 节点说明
+## ComfyUI Node Description
 
 EveryPersonSegSimple Node
 
 ![showit](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsimple.gif)
 
-EveryPersonSegSimple Node  person_fullfil:True
+EveryPersonSegSimple Node with person_fullfil:True
 
 ![showit](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_person_area.gif)
 
@@ -25,28 +25,27 @@ EveryPersonSegDetail Node
 ### EveryPersonSegSimple
 
 
-#### 输入参数
-- **images**: 输入图像
-- **yolov_path**: YOLOv8 分割模型路径（默认使用 `person_yolov8m-seg.pt`）
-- **confidence**: 检测置信度阈值（0.0 ~ 1.0）
-- **drop_area**: 最小保留面积百分比（0 ~ 99）
-- **person_fullfil**: 是否生成完整人像近邻填充区域（person_area）或原始人像个体遮罩（person_masks）
+#### Input Parameters
+- **images**: Input image
+- **yolov_path**: YOLOv8 segmentation model path (default uses `person_yolov8m-seg.pt`)
+- **confidence**: Detection confidence threshold (0.0 ~ 1.0)
+- **drop_area**: Minimum reserved area percentage (0 ~ 99)
+- **person_fullfil**: Whether to generate complete portrait neighboring fill area (person_area) or original portrait individual mask (person_masks)
 
-#### 输出
-- **mask**: 人像掩码集合
-  
+#### Output
+- **mask**: Portrait mask collection
 
-## 使用示例
+## Usage Example
 
-将工作流example/workflowexample_everypersonseg.json拖入 ComfyUI 即可使用：
+Drag the workflow example/workflowexample_everypersonseg.json into ComfyUI to use:
 
 EveryPersonSegSimple
-![工作流示例](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsimple.png)
+![Workflow Example](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsimple.png)
 
 EveryPersonSegDetail
-![工作流示例](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsegdetail.png)
+![Workflow Example](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsegdetail.png)
 
-## 依赖项
+## Dependencies
 - mediapipe>=0.10.13
 - ultralytics>=8.0.0
 - numpy>=1.21.0
@@ -56,38 +55,36 @@ EveryPersonSegDetail
 - scipy>=1.7.0
 
 
-## 模型手动下载
+## Manual Model Download
 
-如果自动下载失败，请手动下载以下模型并放置到指定路径：
+If automatic download fails, please manually download the following models and place them in the specified paths:
 
-### YOLOv8 分割模型
-- **下载地址**: https://huggingface.co/Bingsu/adetailer/resolve/main/person_yolov8m-seg.pt
-- **保存路径**: `ComfyUI/models/ultralytics/segm/person_yolov8m-seg.pt`
+### YOLOv8 Segmentation Model
+- **Download URL**: https://huggingface.co/Bingsu/adetailer/resolve/main/person_yolov8m-seg.pt
+- **Save Path**: `ComfyUI/models/ultralytics/segm/person_yolov8m-seg.pt`
 
-### MediaPipe 人像分割模型
-- **下载地址**: https://huggingface.co/yolain/selfie_multiclass_256x256/resolve/main/selfie_multiclass_256x256.tflite?download=true
-- **保存路径**: `ComfyUI/models/mediapipe/selfie_multiclass_256x256.tflite`
+### MediaPipe Portrait Segmentation Model
+- **Download URL**: https://huggingface.co/yolain/selfie_multiclass_256x256/resolve/main/selfie_multiclass_256x256.tflite?download=true
+- **Save Path**: `ComfyUI/models/mediapipe/selfie_multiclass_256x256.tflite`
 
-## 致谢
+## Acknowledgments
 ### EveryPersonSegDetail
 
-该节点结合 YOLOv8 分割模型和 MediaPipe 人像分割模型，提供更细致的人像遮罩（支持面部、头发、身体、衣物等部位的精细分割）。遮罩轮廓优化部分代码参考了 [djbielejeski/a-person-mask-generator](https://github.com/djbielejeski/a-person-mask-generator) 项目。
+This node combines YOLOv8 segmentation model and MediaPipe portrait segmentation model to provide more detailed portrait masks (supporting fine segmentation of face, hair, body, clothes and other parts). The mask contour optimization part of the code refers to the [djbielejeski/a-person-mask-generator](https://github.com/djbielejeski/a-person-mask-generator) project.
 
-#### 输入参数
-- **images**: 输入图像
-- **face_mask/hair_mask/body_mask/clothes_mask/background_mask**: 选择需要生成的遮罩类型
-- **refine_mask**: 是否启用遮罩轮廓优化
-- **confidence**: 检测置信度阈值
-- **yolov_path**: YOLOv8 分割模型路径
-- **drop_area**: 最小保留面积百分比
+#### Input Parameters
+- **images**: Input image
+- **face_mask/hair_mask/body_mask/clothes_mask/background_mask**: Select mask types to generate
+- **refine_mask**: Whether to enable mask contour optimization
+- **confidence**: Detection confidence threshold
+- **yolov_path**: YOLOv8 segmentation model path
+- **drop_area**: Minimum reserved area percentage
 
-#### 输出
-- **person_masks**: 精细化人像部位遮罩集合
-
+#### Output
+- **person_masks**: Refined portrait part mask collection
+  
 ---
 [![CoiiChan](https://avatars.githubusercontent.com/u/49615294?v=4)](https://github.com/CoiiChan)
 
-## 致谢
-本项目中的 EveryPersonSegDetail 节点遮罩轮廓优化部分代码基于 [djbielejeski/a-person-mask-generator](https://github.com/djbielejeski/a-person-mask-generator) 项目修改实现。
-
-
+## Acknowledgments
+The mask contour optimization part of the EveryPersonSegDetail node in this project is modified and implemented based on the [djbielejeski/a-person-mask-generator](https://github.com/djbielejeski/a-person-mask-generator) project.
