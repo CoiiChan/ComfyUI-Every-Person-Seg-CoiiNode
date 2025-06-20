@@ -1,5 +1,5 @@
-# comfyui-every-person-seg-coii
-[English](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/README_EN.md)|[中文](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/README.md)
+# ComfyUI-Every-Person-Seg-CoiiNode
+[English](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README_EN.md)|[中文](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README.md)
 
 ## Project Introduction
 A tool that provides the ability to split fine-grained contours of people one by one for multi-person usage scenarios.
@@ -11,15 +11,15 @@ There is a demand for multi-person generation in ComfyUI applications, but many 
 
 EveryPersonSegSimple Node
 
-![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.gif)
+![showit](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsimple.gif)
 
 EveryPersonSegSimple Node with person_fullfil:True
 
-![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_person_area.gif)
+![showit](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_person_area.gif)
 
 EveryPersonSegDetail Node
 
-![showit](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsegdetail.gif)
+![showit](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsegdetail.gif)
 
 
 ### EveryPersonSegSimple
@@ -40,10 +40,10 @@ EveryPersonSegDetail Node
 Drag the workflow example/workflowexample_everypersonseg.json into ComfyUI to use:
 
 EveryPersonSegSimple
-![Workflow Example](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsimple.png)
+![Workflow Example](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsimple.png)
 
 EveryPersonSegDetail
-![Workflow Example](https://github.com/CoiiChan/comfyui-every-person-seg-coii/blob/main/example/exampler_everypersonsegdetail.png)
+![Workflow Example](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsegdetail.png)
 
 ## Dependencies
 - mediapipe>=0.10.13
