@@ -46,6 +46,10 @@ class EveryPersonSegSimple:
                 "confidence": ("FLOAT", {"default": 0.25, "min": 0.0, "max": 1.0, "step": 0.01}),
                 "drop_area": ("FLOAT", {"default": 10.0, "min": 0.0, "max": 99.0, "step": 1, "tooltip": "最小保留面积百分比（0~99），小于此比例的mask会被丢弃"}),
                 "person_fullfil": ("BOOLEAN", {"default": False, "label_on": "person_area", "label_off": "person_masks"}),
+                "order": (
+                    ["confidence", "large-small", "small-large", "left-right", "right-left", "top-bottom", "bottom-top"],
+                    {"default": "confidence", "tooltip": "排序方式"},
+                ),
             },
         }
 
@@ -67,7 +71,7 @@ class EveryPersonSegSimple:
             self.model = YOLO(model_path)
             self.model_name = yolov_path
 
-    def generate_person_masks(self, images, yolov_path, confidence, drop_area, person_fullfil):
+    def generate_person_masks(self, images, yolov_path, confidence, drop_area, person_fullfil, order):
         self.load_model(yolov_path)
         mask_batches = []
         for idx, tensor_image in enumerate(images):
@@ -79,6 +83,9 @@ class EveryPersonSegSimple:
             person_masks = []
             img_area = image_pil.width * image_pil.height
             min_area = img_area * (drop_area / 100.0)
+            
+            # 存储掩码及其属性用于排序
+            mask_info = []
             for r in results:
                 for j, c in enumerate(r.boxes.cls):
                     if int(c) == 0:  # COCO 0: person
@@ -87,7 +94,50 @@ class EveryPersonSegSimple:
                             mask = cv2.resize(mask, (image_pil.width, image_pil.height))
                             mask = (mask > 0.5).astype(np.float32)
                             if mask.sum() >= min_area:
-                                person_masks.append(mask)
+                                # 获取置信度
+                                conf = r.boxes.conf[j].cpu().item()
+                                
+                                # 计算掩码面积
+                                area = mask.sum()
+                                
+                                # 计算边界位置
+                                coords = np.where(mask > 0)
+                                if len(coords[0]) == 0 or len(coords[1]) == 0:
+                                    continue
+                                left = np.min(coords[1])
+                                right = np.max(coords[1])
+                                top = np.min(coords[0])
+                                bottom = np.max(coords[0])
+                                
+                                mask_info.append({
+                                    'mask': mask,
+                                    'confidence': conf,
+                                    'area': area,
+                                    'left': left,
+                                    'right': right,
+                                    'top': top,
+                                    'bottom': bottom
+                                })
+            
+            # 根据order参数排序
+            if order == 'confidence':
+                mask_info.sort(key=lambda x: x['confidence'], reverse=True)
+            elif order == 'large-small':
+                mask_info.sort(key=lambda x: x['area'], reverse=True)
+            elif order == 'small-large':
+                mask_info.sort(key=lambda x: x['area'], reverse=False)
+            elif order == 'left-right':
+                mask_info.sort(key=lambda x: x['left'], reverse=False)
+            elif order == 'right-left':
+                mask_info.sort(key=lambda x: x['left'], reverse=True)
+            elif order == 'top-bottom':
+                mask_info.sort(key=lambda x: x['top'], reverse=False)
+            elif order == 'bottom-top':
+                mask_info.sort(key=lambda x: x['top'], reverse=True)
+            
+            # 提取排序后的掩码
+            person_masks = [info['mask'] for info in mask_info]
+            
             if len(person_masks) == 0:
                 # 全部被丢弃，输出一张全黑遮罩，shape=[1,1,H,W]
                 mask_batch = torch.zeros((1, 1, image_pil.height, image_pil.width), dtype=torch.float32)
@@ -117,7 +167,7 @@ class EveryPersonSegSimple:
         all_masks = torch.from_numpy(person_bin).to(all_masks.device).type(all_masks.dtype)
 
         if person_fullfil:
-            # --- person_area计算 ---
+            # --- person_area计算 --- 
             person_bin = (all_masks > 0.5).cpu().numpy().astype(np.uint8)
             N, _, H, W = person_bin.shape
             dist_maps = np.zeros((N, H, W), dtype=np.float32)

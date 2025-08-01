@@ -65,6 +65,10 @@ class EveryPersonSegDetail:
                     {"tooltip": "YOLOv8分割模型文件名"},
                 ),
                 "drop_area": ("FLOAT", {"default": 10.0, "min": 0.0, "max": 99.0, "step": 1, "tooltip": "最小保留面积百分比（0~99），小于此比例的mask会被丢弃"}),
+                "order": (
+                    ["confidence", "large-small", "small-large", "left-right", "right-left", "top-bottom", "bottom-top"],
+                    {"default": "confidence", "tooltip": "排序方式"},
+                ),
             },
         }
 
@@ -121,7 +125,7 @@ class EveryPersonSegDetail:
                 mask_images.append(torch.from_numpy(mask).float()[None, ...])
         return torch.cat(mask_images, dim=0)  # [B, H, W]
 
-    def get_person_area(self, images, yolov_path, confidence, drop_area):
+    def get_person_area(self, images, yolov_path, confidence, drop_area, order):
         # 只支持 segm/ 前缀
         model_file = yolov_path[len("segm/"):] if yolov_path.startswith("segm/") else yolov_path
         model_path = folder_paths.get_full_path("ultralytics_segm", model_file)
@@ -137,9 +141,11 @@ class EveryPersonSegDetail:
                 i = np.dstack((i, np.full((i.shape[0], i.shape[1]), 255)))
             image_pil = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
             results = self.yolo_model.predict(image_pil, conf=confidence, verbose=False)
-            person_masks = []
             img_area = image_pil.width * image_pil.height
             min_area = img_area * (drop_area / 100.0)
+            
+            # 存储掩码及其属性用于排序
+            mask_info = []
             for r in results:
                 for j, c in enumerate(r.boxes.cls):
                     if int(c) == 0:
@@ -148,7 +154,50 @@ class EveryPersonSegDetail:
                             mask = cv2.resize(mask, (image_pil.width, image_pil.height))
                             mask = (mask > 0.5).astype(np.float32)
                             if mask.sum() >= min_area:
-                                person_masks.append(mask)
+                                # 获取置信度
+                                conf = r.boxes.conf[j].cpu().item()
+                                
+                                # 计算掩码面积
+                                area = mask.sum()
+                                
+                                # 计算边界位置
+                                coords = np.where(mask > 0)
+                                if len(coords[0]) == 0 or len(coords[1]) == 0:
+                                    continue
+                                left = np.min(coords[1])
+                                right = np.max(coords[1])
+                                top = np.min(coords[0])
+                                bottom = np.max(coords[0])
+                                
+                                mask_info.append({
+                                    'mask': mask,
+                                    'confidence': conf,
+                                    'area': area,
+                                    'left': left,
+                                    'right': right,
+                                    'top': top,
+                                    'bottom': bottom
+                                })
+            
+            # 根据order参数排序
+            if order == 'confidence':
+                mask_info.sort(key=lambda x: x['confidence'], reverse=True)
+            elif order == 'large-small':
+                mask_info.sort(key=lambda x: x['area'], reverse=True)
+            elif order == 'small-large':
+                mask_info.sort(key=lambda x: x['area'], reverse=False)
+            elif order == 'left-right':
+                mask_info.sort(key=lambda x: x['left'], reverse=False)
+            elif order == 'right-left':
+                mask_info.sort(key=lambda x: x['left'], reverse=True)
+            elif order == 'top-bottom':
+                mask_info.sort(key=lambda x: x['top'], reverse=False)
+            elif order == 'bottom-top':
+                mask_info.sort(key=lambda x: x['top'], reverse=True)
+            
+            # 提取排序后的掩码
+            person_masks = [info['mask'] for info in mask_info]
+            
             if len(person_masks) == 0:
                 mask_batch = torch.zeros((1, 1, image_pil.height, image_pil.width), dtype=torch.float32)
             else:
@@ -197,6 +246,7 @@ class EveryPersonSegDetail:
             confidence,
             yolov_path,
             drop_area,
+            order,
         ):
         # mediapipe mask
         mp_mask = self.get_mediapipe_mask(
@@ -210,7 +260,7 @@ class EveryPersonSegDetail:
             refine_mask=refine_mask,
         )  # [B, H, W]
         # yolo person_area
-        person_area = self.get_person_area(images, yolov_path, confidence, drop_area)  # [N, 1, H, W]
+        person_area = self.get_person_area(images, yolov_path, confidence, drop_area, order)  # [N, 1, H, W]
         # 取交集
         out_masks = []
         for i in range(person_area.shape[0]):
