@@ -31,6 +31,7 @@ EveryPersonSegDetail Node
 - **confidence**: Detection confidence threshold (0.0 ~ 1.0)
 - **drop_area**: Minimum reserved area percentage (0 ~ 99)
 - **person_fullfil**: Whether to generate complete portrait neighboring fill area (person_area) or original portrait individual mask (person_masks)
+- **order**: Mask sorting method (options: confidence, large-small, small-large, left-right, right-left, top-bottom, bottom-top)
 
 #### Output
 - **mask**: Portrait mask collection

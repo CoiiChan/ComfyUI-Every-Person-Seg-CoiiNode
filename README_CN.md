@@ -31,6 +31,7 @@ EveryPersonSegDetail Node
 - **confidence**: 检测置信度阈值（0.0 ~ 1.0）
 - **drop_area**: 最小保留面积百分比（0 ~ 99）
 - **person_fullfil**: 是否生成完整人像近邻填充区域（person_area）或原始人像个体遮罩（person_masks）
+- **order**: 遮罩排序方法（选项：confidence, large-small, small-large, left-right, right-left, top-bottom, bottom-top）
 
 #### 输出
 - **mask**: 人像掩码集合
