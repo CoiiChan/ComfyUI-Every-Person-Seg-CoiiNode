@@ -40,11 +40,9 @@ EveryPersonSegDetail Node
 
 Drag the workflow example/workflowexample_everypersonseg.json into ComfyUI to use:
 
-EveryPersonSegSimple
-![Workflow Example](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsimple.png)
+EveryPersonSegSimple And EveryPersonSegDetail
+![工作流示例](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/example_viewall.png)
 
-EveryPersonSegDetail
-![Workflow Example](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/example/exampler_everypersonsegdetail.png)
 
 ## Dependencies
 - mediapipe>=0.10.13
