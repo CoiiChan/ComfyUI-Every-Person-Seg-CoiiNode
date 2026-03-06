@@ -1,6 +1,10 @@
 # ComfyUI-Every-Person-Seg-CoiiNode
 [English](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README.md)|[中文](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README_CN.md)
 
+## 更新日志
+- **2026-3-6**: 添加基于性别的排序支持（`female-male`、`male-female`），使用 OpenCV DNN 性别检测。添加 `combine` 选项将所有检测到的人物掩码合并为一个。
+- **2025-6-20**: 首次发布
+
 ## 项目介绍
 为多人生图使用场景提供人物精细轮廓逐一拆分能力的工具。
 
@@ -31,7 +35,8 @@ EveryPersonSegDetail Node
 - **confidence**: 检测置信度阈值（0.0 ~ 1.0）
 - **drop_area**: 最小保留面积百分比（0 ~ 99）
 - **person_fullfil**: 是否生成完整人像近邻填充区域（person_area）或原始人像个体遮罩（person_masks）
-- **order**: 遮罩排序方法（选项：confidence, large-small, small-large, left-right, right-left, top-bottom, bottom-top）
+- **order**: 遮罩排序方法（选项：confidence, large-small, small-large, left-right, right-left, top-bottom, bottom-top, female-male, male-female）
+- **combine**: 是否将所有检测到的人物掩码合并为一个掩码（启用/禁用）
 
 #### 输出
 - **mask**: 人像掩码集合
@@ -64,6 +69,12 @@ EveryPersonSegSimple And EveryPersonSegDetail
 ### MediaPipe 人像分割模型
 - **下载地址**: https://huggingface.co/yolain/selfie_multiclass_256x256/resolve/main/selfie_multiclass_256x256.tflite?download=true
 - **保存路径**: `ComfyUI/models/mediapipe/selfie_multiclass_256x256.tflite`
+
+### OpenCV 性别检测模型
+- **Gender Deploy Prototxt**: https://raw.githubusercontent.com/smahesh29/Gender-and-Age-Detection/master/gender_deploy.prototxt
+- **Gender Net Caffemodel**: https://raw.githubusercontent.com/smahesh29/Gender-and-Age-Detection/master/gender_net.caffemodel
+- **Haar Cascade**: https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml
+- **保存路径**: `ComfyUI/models/opencv_dnn/`
 
 ## 致谢
 ### EveryPersonSegDetail

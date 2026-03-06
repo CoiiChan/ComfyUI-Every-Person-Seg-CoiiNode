@@ -1,6 +1,10 @@
 # ComfyUI-Every-Person-Seg-CoiiNode
 [English](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README.md)|[中文](https://github.com/CoiiChan/ComfyUI-Every-Person-Seg-CoiiNode/blob/main/README_CN.md)
 
+## Update
+- **2026-3-6**: Added gender-based sorting support (`female-male`, `male-female`) using OpenCV DNN gender detection. Added `combine` option to merge all detected person masks into one.
+- **2025-6-20**: Initial release
+
 ## Project Introduction
 A tool that provides the ability to split fine-grained contours of people one by one for multi-person usage scenarios.
 
@@ -31,7 +35,8 @@ EveryPersonSegDetail Node
 - **confidence**: Detection confidence threshold (0.0 ~ 1.0)
 - **drop_area**: Minimum reserved area percentage (0 ~ 99)
 - **person_fullfil**: Whether to generate complete portrait neighboring fill area (person_area) or original portrait individual mask (person_masks)
-- **order**: Mask sorting method (options: confidence, large-small, small-large, left-right, right-left, top-bottom, bottom-top)
+- **order**: Mask sorting method (options: confidence, large-small, small-large, left-right, right-left, top-bottom, bottom-top, female-male, male-female)
+- **combine**: Whether to merge all detected person masks into one mask (enabled/disabled)
 
 #### Output
 - **mask**: Portrait mask collection
@@ -63,6 +68,12 @@ If automatic download fails, please manually download the following models and p
 ### MediaPipe Portrait Segmentation Model
 - **Download URL**: https://huggingface.co/yolain/selfie_multiclass_256x256/resolve/main/selfie_multiclass_256x256.tflite?download=true
 - **Save Path**: `ComfyUI/models/mediapipe/selfie_multiclass_256x256.tflite`
+
+### OpenCV Gender Detection Models
+- **Gender Deploy Prototxt**: https://raw.githubusercontent.com/smahesh29/Gender-and-Age-Detection/master/gender_deploy.prototxt
+- **Gender Net Caffemodel**: https://raw.githubusercontent.com/smahesh29/Gender-and-Age-Detection/master/gender_net.caffemodel
+- **Haar Cascade**: https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml
+- **Save Path**: `ComfyUI/models/opencv_dnn/`
 
 ## Acknowledgments
 ### EveryPersonSegDetail
