@@ -379,19 +379,6 @@ class EveryPersonSegDetail:
         # yolo person_area
         person_area = self.get_person_area(images, yolov_path, confidence, drop_area, order)  # [N, 1, H, W]
         
-        if combine:
-            # 将所有掩码相加（取并集）
-            if person_area.shape[0] == 0:
-                # 没有检测到人物，返回空掩码
-                mask = torch.zeros((1, 1, person_area.shape[2], person_area.shape[3]), dtype=torch.float32)
-            else:
-                # 计算所有掩码的并集
-                combined_mask = torch.zeros((person_area.shape[2], person_area.shape[3]), dtype=torch.float32)
-                for i in range(person_area.shape[0]):
-                    combined_mask = torch.logical_or(combined_mask, person_area[i, 0]).float()
-                mask = combined_mask.unsqueeze(0).unsqueeze(0)  # [1, 1, H, W]
-            return (mask,)
-        
         # 将mp_mask调整到与person_area相同的尺寸
         # mp_mask shape: [B, H, W] or [B, H, W, 1], 需要转换为 [B, 1, H, W]
         mp_mask_reshaped = mp_mask
@@ -403,6 +390,22 @@ class EveryPersonSegDetail:
             size=(person_area.shape[2], person_area.shape[3]), 
             mode='nearest'
         ).squeeze(1)  # [B, H, W]
+        
+        if combine:
+            # 将所有掩码与mp_mask取交集后再相加（取并集）
+            if person_area.shape[0] == 0:
+                # 没有检测到人物，返回空掩码
+                mask = torch.zeros((1, 1, person_area.shape[2], person_area.shape[3]), dtype=torch.float32)
+            else:
+                # 计算所有掩码的并集
+                combined_mask = torch.zeros((person_area.shape[2], person_area.shape[3]), dtype=torch.float32)
+                for i in range(person_area.shape[0]):
+                    # 先与mp_mask取交集，再合并
+                    mask_with_mp = person_area[i, 0] * mp_mask_resized[0]  # 默认只取batch 0
+                    combined_mask = torch.logical_or(combined_mask, mask_with_mp).float()
+                mask = combined_mask.unsqueeze(0).unsqueeze(0)  # [1, 1, H, W]
+            return (mask,)
+        
         # 取交集
         out_masks = []
         for i in range(person_area.shape[0]):
